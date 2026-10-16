@@ -3,8 +3,8 @@
 0. Подключение через прокси (выполнить первым)
 
 sudo apt install curl
-export https_proxy="https://<логин>:<пароль>@sw1.whitesinner.dev:8080"
-curl -v -x https://<логин>:<пароль>@sw1.whitesinner.dev:8080 http://example.com
+export https_proxy="https://Rick:Rick_Sanchez@sw1.whitesinner.dev:8080"
+curl -v -x https://Rick:Rick_Sanchez@sw1.whitesinner.dev:8080 http://example.com
 curl https://ifconfig.me
 
 # Шаг 1. Обновить список пакетов и поставить обновления (один раз, до всего остального)
