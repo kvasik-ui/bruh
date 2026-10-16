@@ -1,0 +1,20 @@
+Вариант 11. Микроконтроллеры (C/C++, JTAG/SWD, эмулятор МК)
+
+# Компилятор GCC для ARM Cortex-M и отладчик через мультиархитектурный GDB
+sudo apt install gcc-arm-none-eabi gdb-multiarch -y
+
+# OpenOCD для отладки через JTAG и SWD
+sudo apt install openocd -y
+
+# PlatformIO для сборки и прошивки микроконтроллеров
+sudo apt install python3-pip python3-venv -y
+python3 -m venv ~/mcu-env && source ~/mcu-env/bin/activate
+pip install platformio
+
+# Эмулятор Renode: скачайте .deb со страницы github.com/renode/renode/releases
+# и установите (подставьте имя скачанного файла; GitHub может быть недоступен из РФ)
+sudo apt install ./renode_*.deb -y
+renode --version
+
+# Проверка: версии компилятора и OpenOCD
+arm-none-eabi-gcc --version && openocd --version

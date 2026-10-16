@@ -1,0 +1,20 @@
+Вариант 26. Чат-боты и виртуальные помощники (Python, NLP)
+
+# Rasa 3.x поддерживает только Python 3.8–3.10.
+# Проверьте наличие Python 3.10 в apt; если пакета нет — см. раздел «Если сайт недоступен».
+# Если python3.10 нет в apt (в Ubuntu 24.04 его нет): установите через uv (pip install uv) и uv python install 3.10
+sudo apt install python3.10 python3.10-venv -y || (pip install uv && uv python install 3.10)
+python3.10 -m venv ~/bot-env && source ~/bot-env/bin/activate
+
+# Rasa для диалоговых систем
+pip install rasa
+
+# NLP-библиотеки spaCy и NLTK (без скачивания моделей с GitHub)
+pip install spacy nltk
+# Модель en_core_web_sm скачивается с GitHub — не используем, spaCy работает и без неё
+
+# JupyterLab для отладки диалогов
+pip install jupyterlab
+
+# Проверка: версия Rasa
+rasa --version

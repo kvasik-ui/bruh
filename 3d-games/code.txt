@@ -1,0 +1,23 @@
+Вариант 3. 3D-игры для ПК и консолей (C#, игровой движок, ассеты)
+
+# Игровой движок Godot 4 .NET (версия с поддержкой C#).
+# Flatpak-сборка Godot не содержит C#, поэтому архив берётся со страницы загрузки godotengine.org
+# (вариант Godot 4 .NET, Linux x86_64). Имя архива зависит от версии — возьмите его со страницы.
+mkdir -p ~/godot && cd ~/godot
+# unzip Godot_v4.x-stable_mono_linux_x86_64.zip   <- подставьте имя скачанного архива
+
+# SDK .NET для компиляции C#-кода
+sudo apt install dotnet-sdk-8.0 -y
+
+# Blender для 3D-моделей и анимации
+sudo apt install blender -y
+
+# GIMP для текстур
+sudo apt install gimp -y
+
+# Git LFS для хранения крупных бинарных ассетов
+sudo apt install git-lfs -y
+git lfs install
+
+# Проверка: версия .NET
+dotnet --version

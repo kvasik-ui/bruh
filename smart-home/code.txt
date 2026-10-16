@@ -1,0 +1,32 @@
+Вариант 23. Программное обеспечение умного дома (Python, C++, IoT, эмуляция сети)
+
+# Брокер MQTT Mosquitto и клиенты
+sudo apt install mosquitto mosquitto-clients -y
+
+# Доступ только с localhost и обязательный логин (пароль задаётся при вводе)
+sudo mosquitto_passwd -c /etc/mosquitto/passwd smart
+sudo tee /etc/mosquitto/conf.d/smarthome.conf > /dev/null <<'EOF'
+listener 1883 127.0.0.1
+allow_anonymous false
+password_file /etc/mosquitto/passwd
+EOF
+sudo systemctl enable --now mosquitto
+sudo systemctl restart mosquitto
+
+# Mininet для эмуляции домашней сети
+sudo apt install mininet -y
+
+# Python и клиент MQTT
+sudo apt install python3-pip python3-venv -y
+python3 -m venv ~/home-env && source ~/home-env/bin/activate
+pip install paho-mqtt
+
+# Home Assistant в контейнере Docker
+sudo apt install docker.io -y
+sudo systemctl enable --now docker
+sudo docker run -d --name homeassistant --network host -v ~/ha-config:/config ghcr.io/home-assistant/home-assistant:stable
+
+# Проверка: Mininet работает, Home Assistant отвечает, MQTT требует логин
+sudo mn --test pingall
+curl -I http://localhost:8123
+mosquitto_pub -h 127.0.0.1 -u smart -P <пароль> -t test -m ok

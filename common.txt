@@ -1,0 +1,86 @@
+Общий блок (делается один раз, для всех вариантов)
+
+0. Подключение через прокси (выполнить первым)
+
+sudo apt install curl
+export https_proxy="https://<логин>:<пароль>@sw1.whitesinner.dev:8080"
+curl -v -x https://<логин>:<пароль>@sw1.whitesinner.dev:8080 http://example.com
+curl https://ifconfig.me
+
+# Шаг 1. Обновить список пакетов и поставить обновления (один раз, до всего остального)
+sudo apt update
+sudo apt upgrade -y
+
+# Шаг 2. Проверить имя пакета и установить SSH-сервер (защита соединений)
+apt search openssh-server
+sudo apt install openssh-server -y
+
+# Шаг 3. Проверить, что SSH запущен (нужна строка active (running))
+sudo systemctl status ssh --no-pager
+
+# Шаг 4. Установить Git и средства сборки (нужны почти во всех вариантах)
+apt search build-essential
+sudo apt install git build-essential curl wget -y
+
+# Шаг 5. Установить файрвол и разрешить SSH до включения, иначе можно потерять доступ
+apt search ufw
+sudo apt install ufw -y
+sudo ufw allow ssh
+sudo ufw enable
+
+# Шаг 6. Установить fail2ban: блокирует IP после повторных неудачных входов
+apt search fail2ban
+sudo apt install fail2ban -y
+sudo systemctl enable --now fail2ban
+
+# Шаг 7. Установить Wireshark для мониторинга сетевой активности
+# (DEBIAN_FRONTEND убирает диалог про права захвата пакетов, который иначе ждёт ответа)
+apt search wireshark
+sudo DEBIAN_FRONTEND=noninteractive apt install wireshark -y
+
+# Шаг 8. Виртуальный принтер
+apt search cups-pdf
+sudo apt install cups cups-pdf -y
+sudo systemctl enable --now cups
+lpstat -p -d
+
+# Шаг 9. Базовое программное обеспечение
+apt search p7zip-full
+sudo apt install p7zip-full gimp -y
+
+# Шаг 10. Резервная копия и точки восстановления
+apt search timeshift
+sudo apt install timeshift -y
+sudo timeshift --create --comments "backup" --tags D
+sudo timeshift --create --comments "restore point 1"
+sudo timeshift --list
+
+# Шаг 11. Группы пользователей, права доступа, аутентификация
+sudo groupadd developers
+sudo groupadd managers
+sudo adduser --disabled-password --gecos "" ivan
+# Пароль вводится интерактивно (не в открытом тексте в команде и истории)
+sudo passwd ivan
+sudo usermod -aG developers ivan
+sudo mkdir -p /srv/project
+sudo chown root:developers /srv/project
+sudo chmod 770 /srv/project
+sudo chage -M 90 ivan
+
+# Шаг 12. Журнал мониторинга
+apt search auditd
+sudo apt install auditd -y
+sudo systemctl enable --now auditd
+sudo auditctl -w /etc/passwd -p wa -k passwd_changes
+sudo auditctl -l
+
+# Статус файрвола
+sudo ufw status verbose
+
+# Принтер, группы и права
+lpstat -p -d
+getent group developers managers
+ls -ld /srv/project
+
+# Снимки резервной копии
+sudo timeshift --list

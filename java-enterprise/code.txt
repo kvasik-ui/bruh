@@ -1,0 +1,26 @@
+Вариант 5. Корпоративное Java-ПО банка (Java EE, Spring, сервер приложений)
+
+# IDE IntelliJ IDEA Community для Java EE и Spring
+sudo snap install intellij-idea-community --classic
+
+# JDK 21 (компилятор и виртуальная машина Java)
+sudo apt install openjdk-21-jdk -y
+
+# Сервер приложений Tomcat 10
+sudo apt install tomcat10 -y
+sudo systemctl enable --now tomcat10
+
+# Maven для сборки и управления зависимостями
+sudo apt install maven -y
+
+# Тестовый веб-проект: Maven-архетип webapp (Spring подключается зависимостью в pom.xml,
+# например org.springframework:spring-webmvc; полный Spring Boot-проект берётся с start.spring.io)
+mvn -q archetype:generate -DgroupId=ru.test -DartifactId=bank-app -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false
+cd bank-app && mvn -q package && cd ~
+
+# Проверка защиты ядра: AppArmor должен быть включён
+sudo aa-status
+
+# Проверка: версии Java и Maven, работа Tomcat
+java -version && mvn -version
+curl -I http://localhost:8080

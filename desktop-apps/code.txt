@@ -1,0 +1,31 @@
+Вариант 6. Кроссплатформенные настольные приложения (JS/TS, Electron, инсталляторы)
+
+# Редактор с поддержкой JavaScript и TypeScript
+sudo snap install code --classic
+
+# Node.js и npm
+sudo apt install nodejs npm -y
+
+# Electron и electron-builder для сборки и инсталляторов
+mkdir ~/desktop-app && cd ~/desktop-app && npm init -y
+npm install --save-dev electron electron-builder
+
+# Минимальное приложение: точка входа main.js и окно
+cat > main.js <<'EOF'
+const { app, BrowserWindow } = require('electron');
+app.whenReady().then(() => new BrowserWindow({ width: 800, height: 600 }).loadURL('data:text/html,<h1>Test</h1>'));
+EOF
+npm pkg set main=main.js
+
+# Утилиты для создания .deb и .rpm пакетов
+sudo apt install fakeroot dpkg-dev rpm -y
+
+# Сборка инсталлятора .deb (результат в папке dist/)
+npx electron-builder --linux deb
+
+# Менеджер паролей KeePassXC для безопасного хранения учётных данных
+sudo apt install keepassxc -y
+
+# Проверка: версии Node.js и Electron
+node --version && npx electron --version
+ls dist/*.deb

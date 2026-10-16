@@ -1,0 +1,15 @@
+Вариант 21. Системы автоматизированного проектирования (C++, 3D-библиотеки, параметрическое моделирование)
+
+# IDE Qt Creator и компиляторы
+sudo apt install qtcreator g++ cmake -y
+
+# OpenCASCADE: модули из apt
+sudo apt install libocct-foundation-dev libocct-data-exchange-dev -y
+
+# FreeCAD: в Ubuntu 24.04 пакета freecad в apt нет. Ставим через flatpak (проверить доступность flathub.org)
+sudo apt install flatpak -y
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub org.freecadweb.FreeCAD -y
+
+# Проверка
+flatpak run org.freecadweb.FreeCAD --version

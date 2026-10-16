@@ -1,0 +1,29 @@
+Вариант 2. Кроссплатформенные мобильные приложения (Dart, Flutter)
+
+# Среда разработки Android Studio (snap)
+sudo snap install android-studio --classic
+
+# SDK Flutter (snap)
+sudo snap install flutter --classic
+
+# Редактор с плагинами Flutter и Dart (snap)
+sudo snap install code --classic
+
+# Антивирус ClamAV
+sudo apt install clamav clamav-daemon -y
+sudo systemctl stop clamav-freshclam && sudo freshclam && sudo systemctl start clamav-freshclam
+
+# Виртуализация для эмулятора Android (проверка поддержки KVM)
+sudo apt install qemu-system-x86 libvirt-daemon-system -y
+sudo usermod -aG kvm,libvirt $USER
+
+# Компоненты Android SDK и образ эмулятора (sdkmanager из Android SDK, путь ~/Android/Sdk)
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+sdkmanager --install "platform-tools" "platforms;android-35" "system-images;android-35;google_apis;x86_64"
+
+# Создание эмулятора (AVD) из командной строки
+avdmanager create avd -n test_avd -k "system-images;android-35;google_apis;x86_64"
+
+# Проверка: Flutter видит Android SDK и устройства
+flutter doctor

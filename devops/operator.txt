@@ -1,0 +1,52 @@
+Руководство оператора: Jenkins (платформа CI/CD)
+Вариант задания № 4. Ubuntu 26.04 LTS. ГОСТ 19.505-79
+
+1. Назначение программы
+Автоматизация сборки, тестирования и развёртывания приложений по конвейеру (pipeline).
+
+2. Условия выполнения
+Нужны учётная запись с правами sudo и подключение к интернету. Ubuntu 26.04 LTS; Java 17 или 21; ОЗУ не менее 4 ГБ; свободное место не менее 10 ГБ.
+
+3. Выполнение программы
+3.1 Загрузка программы. Команды выполняются по одной:
+sudo snap install code --classic
+sudo apt install openjdk-21-jdk -y
+sudo apt install docker.io docker-compose-v2 -y
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc <АКТУАЛЬНЫЙ_URL_КЛЮЧА>
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list
+sudo apt update
+sudo apt install jenkins -y
+sudo apt install prometheus golang-go ansible -y
+Ответ программы: установка завершается без ошибок.
+
+3.2 Запуск программы. Откройте в браузере адрес http://localhost:8080 и войдите с начальным паролем.
+
+3.3 Проверка работоспособности. Выполните команды:
+sudo systemctl status jenkins --no-pager
+sudo docker run --rm hello-world
+sudo systemctl status prometheus --no-pager
+Ответ программы: в выводе указаны версии или статус компонентов; ошибок нет.
+
+3.4 Выполнение операций:
+3.4.1 Первичная настройка Jenkins. Условия: служба Jenkins запущена, порт 8080 доступен.
+   1. Выполните sudo cat /var/lib/jenkins/secrets/initialAdminPassword и скопируйте пароль.
+   2. Вставьте пароль на странице входа и выберите установку рекомендованных плагинов.
+   3. Создайте администратора и сохраните настройки.
+   Результат: Jenkins готов к работе.
+3.4.2 Создание конвейера сборки. Условия: выполнен вход в Jenkins.
+   1. Нажмите New Item, введите имя и выберите Pipeline.
+   2. В разделе Pipeline вставьте сценарий Jenkinsfile.
+   3. Нажмите Save и затем Build Now.
+   Результат: сборка выполнена, в журнале (Console Output) видно результат.
+3.4.3 Просмотр журналов сборок. Условия: выполнена хотя бы одна сборка.
+   1. Откройте задание и выберите номер сборки.
+   2. Перейдите в Console Output для просмотра журнала.
+   Результат: причина ошибок сборки найдена.
+
+3.5 Завершение работы: сохраните результаты, закройте программу штатным способом (меню «Файл» → «Выход» или Ctrl+Q). Для программ, запущенных в терминале, — Ctrl+C.
+
+4. Сообщения оператору
+– Jenkins не запускается: проверьте журнал командой sudo journalctl -u jenkins -n 50.
+– Ошибка порта 8080: освободите порт или измените HTTP-порт в /etc/default/jenkins.

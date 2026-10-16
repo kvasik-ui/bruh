@@ -1,0 +1,24 @@
+Вариант 8. Современные SPA-приложения (React, Angular, Vue, NoSQL, бандлер)
+
+# IDE WebStorm (snap)
+sudo snap install webstorm --classic
+
+# Node.js и npm из репозитория Ubuntu
+sudo apt install nodejs npm -y
+
+# Vite и линтеры глобально
+sudo npm install -g vite eslint prettier
+
+# Тестовый проект React на Vite, зависимости и проверка уязвимостей
+npm create vite@latest my-spa -- --template react
+cd my-spa && npm install && npm audit
+cd ~
+
+# MongoDB в Docker: с логином и паролем, доступ только с localhost
+sudo apt install docker.io -y
+sudo systemctl enable --now docker
+sudo docker run -d --name mongo -p 127.0.0.1:27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e 'MONGO_INITDB_ROOT_PASSWORD=ChangeMe_Strong1!' mongo:7
+
+# Проверка: версии инструментов и работа контейнера
+node --version && vite --version
+sudo docker ps --filter name=mongo

@@ -1,0 +1,53 @@
+Руководство оператора: DefectDojo (платформа управления уязвимостями)
+Вариант задания № 13. Ubuntu 26.04 LTS. ГОСТ 19.505-79
+
+1. Назначение программы
+Централизованный учёт результатов сканирования безопасности: импорт отчётов SAST, отслеживание и закрытие уязвимостей.
+
+2. Условия выполнения
+Нужны учётная запись с правами sudo и подключение к интернету. Ubuntu 26.04 LTS; Docker и Docker Compose; ОЗУ не менее 8 ГБ.
+
+3. Выполнение программы
+3.1 Загрузка программы. Команды выполняются по одной:
+sudo apt install python3-pip python3-venv -y
+python3 -m venv ~/sast-env && source ~/sast-env/bin/activate
+pip install semgrep bandit
+sudo apt install wget apt-transport-https gnupg -y
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo gpg --dearmor -o /usr/share/keyrings/trivy.gpg
+echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee /etc/apt/sources.list.d/trivy.list
+sudo apt update && sudo apt install trivy -y
+sudo apt install docker.io docker-compose-v2 git -y
+sudo systemctl enable --now docker
+sudo docker pull zaproxy/zap-stable
+git clone https://github.com/DefectDojo/django-DefectDojo.git
+Ответ программы: установка завершается без ошибок.
+
+3.2 Запуск программы. Запуск: sudo docker compose up -d в каталоге django-DefectDojo; вход через браузер на порту, указанном в документации.
+
+3.3 Проверка работоспособности. Выполните команды:
+trivy --version && docker --version
+~/sast-env/bin/semgrep --version && ~/sast-env/bin/bandit --version
+Ответ программы: в выводе указаны версии или статус компонентов; ошибок нет.
+
+3.4 Выполнение операций:
+3.4.1 Импорт отчёта SAST. Условия: DefectDojo запущен, создан продукт.
+   1. Откройте раздел Findings → Import.
+   2. Выберите тип отчёта (например, Semgrep или Bandit) и файл JSON.
+   3. Нажмите Import.
+   Результат: результаты сканирования добавлены в систему.
+3.4.2 Просмотр и закрытие уязвимости. Условия: импорт выполнен.
+   1. Откройте найденную уязвимость из списка.
+   2. Измените статус: Mitigated или False Positive.
+   3. Сохраните изменения.
+   Результат: статус уязвимости обновлён.
+3.4.3 Формирование отчёта. Условия: есть данные по уязвимостям.
+   1. Откройте раздел Reports.
+   2. Выберите продукт и формат отчёта.
+   3. Сохраните файл.
+   Результат: отчёт по уязвимостям сформирован.
+
+3.5 Завершение работы: сохраните результаты, закройте программу штатным способом (меню «Файл» → «Выход» или Ctrl+Q). Для программ, запущенных в терминале, — Ctrl+C.
+
+4. Сообщения оператору
+– Сервисы не запускаются: проверьте docker compose logs.
+– Ошибка импорта: проверьте версию формата отчёта и выбранный тип сканера.

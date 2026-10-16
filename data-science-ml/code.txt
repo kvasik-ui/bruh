@@ -1,0 +1,31 @@
+Вариант 7. Анализ данных и машинное обучение (Python, R, GPU, версии данных)
+
+# Python и виртуальное окружение
+sudo apt install python3-pip python3-venv -y
+python3 -m venv ~/ml-env && source ~/ml-env/bin/activate
+
+# JupyterLab для блоков кода и визуализации
+pip install jupyterlab
+
+# Библиотеки машинного обучения (PyTorch — крупный пакет, загрузка может занять время)
+pip install numpy pandas scikit-learn matplotlib torch
+
+# MLflow для трекинга экспериментов, DVC для версий данных и моделей
+pip install mlflow dvc
+deactivate
+
+# R (базовый пакет из apt). RStudio в apt нет: скачайте .deb с сайта Posit и установите командой sudo apt install ./rstudio-*.deb
+sudo apt install r-base -y
+
+# Драйвер NVIDIA и CUDA (на ВМ без GPU этот блок пропускается)
+ubuntu-drivers devices
+sudo ubuntu-drivers install
+sudo apt install nvidia-cuda-toolkit -y
+
+# Шифрование конфиденциальных данных через cryptsetup (LUKS)
+sudo apt install cryptsetup -y
+
+# Проверка: версии инструментов и видимость GPU
+nvidia-smi
+cryptsetup --version
+dvc --version

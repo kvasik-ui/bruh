@@ -1,0 +1,19 @@
+Вариант 17. Встроенное ПО автомобильных информационно-развлекательных систем (AUTOSAR, CAN)
+
+# Редактор VS Code (snap)
+sudo snap install code --classic
+
+# Компилятор для ARM и утилиты CAN-шины
+sudo apt install gcc-arm-none-eabi can-utils -y
+
+# DDS: Cyclone DDS (dev-файлы для сборки)
+sudo apt install cyclonedds-dev -y
+
+# Виртуальный CAN-интерфейс vcan0 (симулятор шины)
+sudo modprobe vcan
+sudo ip link add dev vcan0 type vcan
+sudo ip link set up vcan0
+
+# Проверка: отправить и принять кадр на vcan0
+candump vcan0 &
+cansend vcan0 123#DEADBEEF

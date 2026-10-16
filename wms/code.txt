@@ -1,0 +1,20 @@
+Вариант 29. WMS-системы (Java, RFID, штрихкоды, симуляция склада)
+
+# IDE IntelliJ IDEA Community (snap)
+sudo snap install intellij-idea-community --classic
+
+# JDK 21 и Maven
+sudo apt install openjdk-21-jdk maven -y
+
+# libnfc для RFID-считывателей
+sudo apt install libnfc-bin libnfc-dev -y
+
+# PostgreSQL для базы склада
+sudo apt install postgresql postgresql-contrib -y
+sudo systemctl enable --now postgresql
+
+# ZXing (штрихкоды) подключается в pom.xml зависимостью com.google.zxing:core (версия 3.5.3)
+
+# Проверка: версии Java и Maven, считыватель RFID
+java -version && mvn -version
+nfc-list

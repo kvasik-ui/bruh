@@ -1,0 +1,21 @@
+Вариант 30. Интеллектуальные транспортные системы (Python, временные ряды, визуализация потоков)
+
+# SUMO и утилиты транспортного моделирования
+sudo apt install sumo sumo-tools -y
+
+# Окружение Python для анализа
+sudo apt install python3-pip python3-venv -y
+python3 -m venv ~/its-env && source ~/its-env/bin/activate
+pip install pandas statsmodels matplotlib jupyterlab
+deactivate
+
+# Grafana через Docker
+sudo apt install docker.io -y
+sudo systemctl enable --now docker
+sudo docker run -d --name grafana -p 127.0.0.1:3000:3000 grafana/grafana
+
+# Запуск модели с выводом результатов (tripinfo.xml — данные по каждой поездке для анализа)
+sumo --tripinfo-output tripinfo.xml -c config.sumocfg
+
+# Проверка
+sumo --version

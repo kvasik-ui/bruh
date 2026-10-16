@@ -1,0 +1,27 @@
+Вариант 10. Интернет вещей, IoT (C/C++/Python, Raspberry Pi, ESP32, облака)
+
+# PlatformIO для прошивки ESP32 и Raspberry Pi Pico (через pip)
+sudo apt install python3-pip python3-venv -y
+python3 -m venv ~/iot-env && source ~/iot-env/bin/activate
+pip install platformio
+
+# SDK облачных IoT-платформ AWS и Azure
+pip install AWSIoTPythonSDK azure-iot-device
+deactivate
+
+# Node-RED для визуализации потоков данных (через npm)
+sudo apt install nodejs npm -y
+sudo npm install -g --unsafe-perm node-red
+node-red --version
+
+# Брокер MQTT Mosquitto и клиенты для тестов
+sudo apt install mosquitto mosquitto-clients -y
+sudo systemctl enable --now mosquitto
+
+# OpenSSL для сертификатов безопасного подключения к облаку
+sudo apt install openssl -y
+
+# Проверка: брокер MQTT принимает и отдаёт сообщения
+mosquitto_sub -t test/topic -C 1 &
+mosquitto_pub -t test/topic -m "hello"
+# Симулятор Wokwi работает в браузере на wokwi.com (установка не требуется)

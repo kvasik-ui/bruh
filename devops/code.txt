@@ -1,0 +1,28 @@
+Вариант 4. Команда DevOps (CI/CD, контейнеры, мониторинг, Bash/Python/Go/YAML)
+
+# Редактор VS Code (snap)
+sudo snap install code --classic
+
+# Java 21 для Jenkins
+sudo apt install openjdk-21-jdk -y
+
+# Docker для контейнеризации
+sudo apt install docker.io docker-compose-v2 -y
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+
+# Jenkins: пакета в стандартном репозитории Ubuntu нет, нужен репозиторий Jenkins.
+# Актуальный URL ключа берётся со страницы jenkins.io/doc/book/installing/linux (ключ меняется).
+# Подставьте вместо <АКТУАЛЬНЫЙ_URL_КЛЮЧА> адрес со страницы:
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc <АКТУАЛЬНЫЙ_URL_КЛЮЧА>
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list
+sudo apt update
+sudo apt install jenkins -y
+
+# Prometheus (мониторинг), Go и Ansible из репозитория Ubuntu
+sudo apt install prometheus golang-go ansible -y
+
+# Проверка: Jenkins, Docker и Prometheus работают
+sudo systemctl status jenkins --no-pager
+sudo docker run --rm hello-world
+sudo systemctl status prometheus --no-pager

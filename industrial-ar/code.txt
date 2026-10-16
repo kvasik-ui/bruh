@@ -1,0 +1,18 @@
+Вариант 24. AR-решения для промышленных предприятий (Unity, AR-плагины, SDK гарнитур)
+
+# Ключ и репозиторий Unity Hub (проверить актуальность на unity.com)
+wget -qO - https://hub.unity3d.com/linux/keys/public | gpg --dearmor | sudo tee /usr/share/keyrings/unityhub.gpg > /dev/null
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/unityhub.gpg] https://hub.unity3d.com/linux/repos/deb stable main" | sudo tee /etc/apt/sources.list.d/unityhub.list
+sudo apt update && sudo apt install unityhub -y
+
+# .NET SDK для C#-скриптов
+sudo apt install dotnet-sdk-8.0 -y
+
+# Blender для 3D-моделей оборудования
+sudo apt install blender -y
+
+# Проверка: Unity Hub установлен
+dpkg -l | grep unityhub
+# Редактор Unity и пакет AR Foundation ставятся через Unity Hub (графически):
+# Installs -> Install Editor (версия LTS), затем в редакторе Window -> Package Manager -> AR Foundation.
+# Ключ и адрес репозитория Unity Hub нужно сверить со страницы unity.com перед установкой.

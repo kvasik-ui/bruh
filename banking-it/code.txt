@@ -1,0 +1,22 @@
+Вариант 18. Банковский IT: Java EE и криптографическая защита данных
+
+# IDE IntelliJ IDEA Community (snap)
+sudo snap install intellij-idea-community --classic
+
+# JDK 21 и Maven
+sudo apt install openjdk-21-jdk maven -y
+
+# Криптография и менеджер ключей
+sudo apt install openssl gnupg keepassxc -y
+
+# Сервер БД
+sudo apt install postgresql postgresql-contrib -y
+
+# Двухфакторная аутентификация (TOTP) через PAM
+sudo apt install libpam-google-authenticator -y
+
+# Ключ RSA 4096 для проверки шифрования
+openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:4096
+
+# Проверка
+java -version && mvn -version && openssl version

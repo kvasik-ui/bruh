@@ -1,0 +1,48 @@
+Руководство оператора: PostgreSQL (система управления базами данных)
+Вариант задания № 16. Ubuntu 26.04 LTS. ГОСТ 19.505-79
+
+1. Назначение программы
+Хранение и обработка данных медицинской информационной системы на сервере баз данных.
+
+2. Условия выполнения
+Нужны учётная запись с правами sudo и подключение к интернету. Ubuntu 26.04 LTS; ОЗУ не менее 4 ГБ; права sudo.
+
+3. Выполнение программы
+3.1 Загрузка программы. Команды выполняются по одной:
+sudo apt install qtcreator g++ cmake python3 python3-pip -y
+sudo apt install postgresql postgresql-contrib -y
+sudo systemctl enable --now postgresql
+sudo apt install postgresql-16-pgaudit -y
+sudo sed -i "s/^#*shared_preload_libraries.*/shared_preload_libraries = 'pgaudit'/" /etc/postgresql/16/main/postgresql.conf
+sudo systemctl restart postgresql
+sudo apt install dcmtk r-base -y
+Ответ программы: установка завершается без ошибок.
+
+3.2 Запуск программы. Сервер работает службой postgresql; подключение командой sudo -u postgres psql.
+
+3.3 Проверка работоспособности. Выполните команды:
+g++ --version && psql --version
+dcmdump --version
+R --version | head -1
+Ответ программы: в выводе указаны версии или статус компонентов; ошибок нет.
+
+3.4 Выполнение операций:
+3.4.1 Создание базы данных и пользователя. Условия: служба PostgreSQL запущена.
+   1. Откройте консоль: sudo -u postgres psql.
+   2. Выполните CREATE USER app_user WITH PASSWORD 'пароль';
+   3. Выполните CREATE DATABASE med_db OWNER app_user;
+   Результат: база и пользователь созданы.
+3.4.2 Подключение к базе. Условия: база создана.
+   1. Выполните psql -h localhost -U app_user -d med_db.
+   2. Введите пароль.
+   Результат: подключение выполнено.
+3.4.3 Резервная копия базы. Условия: база содержит данные.
+   1. Выполните pg_dump -U app_user med_db > med_db.sql.
+   2. Проверьте размер созданного файла.
+   Результат: резервная копия сохранена.
+
+3.5 Завершение работы: сохраните результаты, закройте программу штатным способом (меню «Файл» → «Выход» или Ctrl+Q). Для программ, запущенных в терминале, — Ctrl+C.
+
+4. Сообщения оператору
+– Сервер не запускается: проверьте журнал sudo journalctl -u postgresql -n 50.
+– Ошибка аутентификации: проверьте файл pg_hba.conf и пароль пользователя.

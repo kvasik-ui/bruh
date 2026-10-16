@@ -1,0 +1,47 @@
+Руководство оператора: Allure (отчёты о тестировании)
+Вариант задания № 14. Ubuntu 26.04 LTS. ГОСТ 19.505-79
+
+1. Назначение программы
+Формирование наглядных отчётов по результатам автоматизированных тестов Python, Java и JavaScript.
+
+2. Условия выполнения
+Нужны учётная запись с правами sudo и подключение к интернету. Ubuntu 26.04 LTS; Python 3.10 и новее; Java 21; Node.js LTS.
+
+3. Выполнение программы
+3.1 Загрузка программы. Команды выполняются по одной:
+sudo snap install pycharm-community --classic
+sudo apt install python3-pip python3-venv -y
+python3 -m venv ~/test-env && source ~/test-env/bin/activate
+pip install pytest selenium allure-pytest locust
+sudo snap install chromium
+sudo apt install openjdk-21-jdk nodejs npm -y
+sudo npm install -g allure-commandline
+sudo apt install jmeter -y
+Ответ программы: установка завершается без ошибок.
+
+3.2 Запуск программы. Тесты запускаются командой pytest --alluredir=allure-results; отчёт открывается командой allure serve allure-results.
+
+3.3 Проверка работоспособности. Выполните команды:
+pytest --version && locust --version
+allure --version
+Ответ программы: в выводе указаны версии или статус компонентов; ошибок нет.
+
+3.4 Выполнение операций:
+3.4.1 Запуск тестов с сохранением результатов. Условия: окружение активировано, pytest установлен.
+   1. Перейдите в каталог с тестами.
+   2. Выполните pytest --alluredir=allure-results.
+   Результат: результаты сохранены в каталоге allure-results.
+3.4.2 Просмотр отчёта. Условия: результаты тестов сохранены.
+   1. Выполните allure serve allure-results.
+   2. Откройте адрес, который выведет команда, в браузере.
+   Результат: отчёт открыт в браузере.
+3.4.3 Экспорт отчёта. Условия: отчёт сформирован.
+   1. Выполните allure generate allure-results -o report --clean.
+   2. Откройте файл report/index.html.
+   Результат: статический отчёт готов к передаче.
+
+3.5 Завершение работы: сохраните результаты, закройте программу штатным способом (меню «Файл» → «Выход» или Ctrl+Q). Для программ, запущенных в терминале, — Ctrl+C.
+
+4. Сообщения оператору
+– Команда allure не найдена: проверьте установку npm и путь к глобальным пакетам.
+– Пустой отчёт: убедитесь, что в pytest указан --alluredir.

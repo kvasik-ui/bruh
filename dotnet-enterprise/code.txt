@@ -1,0 +1,22 @@
+Вариант 9. Корпоративные решения на .NET (C#, F#, ASP.NET Core, Entity Framework)
+
+# IDE JetBrains Rider (snap)
+sudo snap install rider --classic
+
+# .NET SDK 8 из репозитория Ubuntu (проверить наличие: apt search dotnet-sdk)
+sudo apt install dotnet-sdk-8.0 -y
+dotnet --version
+
+# Тестовый проект ASP.NET Core Web API и инструменты Entity Framework
+dotnet new webapi -n MyApi
+cd MyApi
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet tool install --global dotnet-ef
+dotnet build
+dotnet list package --vulnerable
+cd ~
+
+# SQL Server в Docker (образ из реестра Microsoft; пароль в одинарных кавычках, иначе bash раскроет «!»)
+sudo apt install docker.io -y
+sudo systemctl enable --now docker
+sudo docker run -d --name mssql -e "ACCEPT_EULA=Y" -e 'MSSQL_SA_PASSWORD=Strong!Pass123' -p 127.0.0.1:1433:1433 mcr.microsoft.com/mssql/server:2022-latest

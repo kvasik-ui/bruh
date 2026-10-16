@@ -1,0 +1,22 @@
+Вариант 14. Автоматизированное тестирование (Python, Java, JS, тест-сценарии, отчёты)
+
+# IDE PyCharm Community (snap)
+sudo snap install pycharm-community --classic
+
+# Окружение Python: pytest, Selenium, Allure и Locust
+sudo apt install python3-pip python3-venv -y
+python3 -m venv ~/test-env && source ~/test-env/bin/activate
+pip install pytest selenium allure-pytest locust
+pytest --version && locust --version
+deactivate
+
+# Браузер для Selenium: в Ubuntu Chromium ставится через snap (пакет chromium-browser из apt — это заглушка)
+sudo snap install chromium
+
+# Allure (нужны Java и Node.js)
+sudo apt install openjdk-21-jdk nodejs npm -y
+sudo npm install -g allure-commandline
+allure --version
+
+# JMeter из apt. Версия в apt устаревшая (2.13); актуальную скачайте с jmeter.apache.org
+sudo apt install jmeter -y

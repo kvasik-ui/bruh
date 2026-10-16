@@ -1,0 +1,12 @@
+Вариант 20. Компьютерное зрение для видеонаблюдения (Python, C++, IP-камеры)
+
+# OpenCV, NumPy, FFmpeg, VLC и pip из репозитория Ubuntu
+sudo apt install python3-opencv python3-numpy python3-venv python3-pip ffmpeg vlc -y
+
+# Окружение с доступом к системным пакетам (--system-site-packages)
+python3 -m venv --system-site-packages ~/cv-env && source ~/cv-env/bin/activate
+pip install onvif-zeep
+
+# Проверка: OpenCV и onvif импортируются в одном окружении
+python -c "import cv2, onvif; print(cv2.__version__)"
+deactivate

@@ -1,0 +1,23 @@
+Вариант 15. Централизованное управление конфигурациями серверов (Ansible, Puppet, Chef)
+
+# Ansible и средства резервного копирования
+sudo apt install ansible restic borgbackup -y
+
+# Проверка Ansible: локальный хост через инвентарь
+echo -e "[local]
+localhost ansible_connection=local" > ~/inventory.ini
+ansible -i ~/inventory.ini local -m ping
+
+# Мониторинг: Prometheus и экспортёр метрик узла
+sudo apt install prometheus prometheus-node-exporter -y
+sudo systemctl enable --now prometheus-node-exporter
+
+# Виртуализация: QEMU и libvirt (после добавления в группу нужен новый вход в систему)
+sudo apt install qemu-system-x86 libvirt-daemon-system -y
+sudo systemctl enable --now libvirtd
+sudo usermod -aG libvirt $USER
+
+# Проверка
+restic version && borg --version
+curl -s http://localhost:9100/metrics | head -3
+sudo virsh list --all

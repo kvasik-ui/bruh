@@ -1,0 +1,18 @@
+Вариант 12. AR/VR-приложения (C#/C++, игровой движок, SDK шлемов)
+
+# Godot 4 .NET (версия с поддержкой C#) — архив с godotengine.org, см. вариант 3
+mkdir -p ~/godot && cd ~/godot
+# unzip Godot_v4.x-stable_mono_linux_x86_64.zip   <- подставьте имя скачанного архива
+
+# .NET SDK для C#
+sudo apt install dotnet-sdk-8.0 -y
+
+# Загрузчик OpenXR для работы с AR/VR-шлемами (проверить точное имя пакета)
+apt search openxr
+sudo apt install libopenxr-loader1 -y
+
+# Blender для 3D-моделей сцены
+sudo apt install blender -y
+
+# Проверка: версия .NET и наличие OpenXR
+dotnet --version && apt list --installed | grep openxr

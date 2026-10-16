@@ -1,0 +1,52 @@
+Руководство оператора: Android Studio и Flutter SDK
+Вариант задания № 2. Ubuntu 26.04 LTS. ГОСТ 19.505-79
+
+1. Назначение программы
+Разработка кроссплатформенных мобильных приложений для iOS и Android из единой кодовой базы на языке Dart.
+
+2. Условия выполнения
+Нужны учётная запись с правами sudo и подключение к интернету. Ubuntu 26.04 LTS, 64-разрядная; процессор с поддержкой виртуализации (VT-x/AMD-V); ОЗУ не менее 8 ГБ; диск не менее 25 ГБ.
+
+3. Выполнение программы
+3.1 Загрузка программы. Команды выполняются по одной:
+sudo snap install android-studio --classic
+sudo snap install flutter --classic
+sudo snap install code --classic
+sudo apt install clamav clamav-daemon -y
+sudo systemctl stop clamav-freshclam && sudo freshclam && sudo systemctl start clamav-freshclam
+sudo apt install qemu-system-x86 libvirt-daemon-system -y
+sudo usermod -aG kvm,libvirt $USER
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+sdkmanager --install "platform-tools" "platforms;android-35" "system-images;android-35;google_apis;x86_64"
+avdmanager create avd -n test_avd -k "system-images;android-35;google_apis;x86_64"
+Ответ программы: установка завершается без ошибок.
+
+3.2 Запуск программы. Запустите Android Studio из меню приложений или командой android-studio.
+
+3.3 Проверка работоспособности. Выполните команды:
+flutter doctor
+Ответ программы: в выводе указаны версии или статус компонентов; ошибок нет.
+
+3.4 Выполнение операций:
+3.4.1 Создание нового проекта Flutter. Условия: установлены Android Studio и Flutter SDK.
+   1. В Android Studio выберите New Flutter Project.
+   2. Укажите имя проекта и каталог, затем нажмите Create.
+   3. Дождитесь загрузки зависимостей.
+   Результат: проект открыт в редакторе и готов к запуску.
+3.4.2 Запуск приложения на эмуляторе. Условия: создан проект, настроен эмулятор Android (Device Manager).
+   1. Выберите эмулятор в списке устройств на панели инструментов.
+   2. Нажмите Run (зелёная стрелка).
+   3. Дождитесь появления приложения на экране эмулятора.
+   Результат: приложение запущено на эмуляторе.
+3.4.3 Проверка окружения. Условия: установлен Flutter SDK.
+   1. Выполните в терминале: flutter doctor.
+   2. Устраните отмеченные ошибки (отсутствующие Android SDK, лицензии).
+   3. Примите лицензии командой flutter doctor --android-licenses.
+   Результат: все разделы отчёта flutter doctor отмечены галочкой.
+
+3.5 Завершение работы: сохраните результаты, закройте программу штатным способом (меню «Файл» → «Выход» или Ctrl+Q). Для программ, запущенных в терминале, — Ctrl+C.
+
+4. Сообщения оператору
+– Эмулятор не запускается: проверьте виртуализацию (egrep -c '(vmx|svm)' /proc/cpuinfo) и группу kvm (groups).
+– Ошибки лицензий Android SDK: повторите flutter doctor --android-licenses.

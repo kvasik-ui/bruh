@@ -1,0 +1,21 @@
+Вариант 16. Медицинское ПО (C++/Python, сертифицированная среда, БД)
+
+# IDE Qt Creator и компиляторы C++
+sudo apt install qtcreator g++ cmake python3 python3-pip -y
+
+# СУБД PostgreSQL
+sudo apt install postgresql postgresql-contrib -y
+sudo systemctl enable --now postgresql
+
+# Аудит: pgAudit должен совпадать с версией PostgreSQL (здесь 16)
+sudo apt install postgresql-16-pgaudit -y
+sudo sed -i "s/^#*shared_preload_libraries.*/shared_preload_libraries = 'pgaudit'/" /etc/postgresql/16/main/postgresql.conf
+sudo systemctl restart postgresql
+
+# DICOM-утилиты и статистика
+sudo apt install dcmtk r-base -y
+
+# Проверка
+g++ --version && psql --version
+dcmdump --version
+R --version | head -1
